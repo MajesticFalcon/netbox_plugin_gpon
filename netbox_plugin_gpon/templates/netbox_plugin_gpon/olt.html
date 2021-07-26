@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load buttons %}
+{% load helpers %}
+{% load plugins %}
+{% load static %}
+{% load tz %}
+{% load render_table from django_tables2 %}
+
+{% block header %}
+    <div class="row noprint">
+        <div class="col-sm-8 col-md-9">
+            <ol class="breadcrumb">
+                <li><a href="{% url 'plugins:netbox_plugin_gpon:olt_list' %}">OLTs</a></li>
+
+                <li>{{ object.name }}</li>
+            </ol>
+        </div>
+        <div class="col-sm-4 col-md-3">
+            <form action="{% url 'plugins:netbox_plugin_gpon:olt_list' %}" method="get">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search OLTs" />
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">
+                            <span class="mdi mdi-magnify" aria-hidden="true"></span>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-md-6 col-md-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Optical Line Terminator ( OLT )</strong>
+            </div>
+            <table class="table table-hover panel-body attr-table">
+                <tr>
+                    <td>Name</td>
+                    <td>{{ object.name }}</td>
+                </tr>
+                <tr>
+                    <td>Manufacturer</td>
+                    <td>{{ object.manufacturer }}</td>
+                </tr>
+                <tr>
+                    <td>Device Type</td>
+                    <td>{{ object.device_type }}</td>
+                </tr>
+                <tr>
+                    <td>Site</td>
+                    <td>{{ object.site }}</td>
+                </tr>
+                <tr>
+                    <td>IP</td>
+                    <td>{{ object.ip_address }}</td>
+                </tr>
+                <tr>
+                    <td>Comments</td>
+                    <td>{{ object.comments }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-4">
+            <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Downstream Splitters ( {{ splitter_count }} )</strong>
+            </div>
+            {% if splitter_table %}
+                {% render_table splitter_table %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+</div>
+
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Downstream ONTs ( {{ ont_count }} )</strong>
+            </div>
+            {% if ont_table %}
+                {% render_table ont_table %}
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
