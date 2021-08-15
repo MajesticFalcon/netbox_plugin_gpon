@@ -49,6 +49,15 @@ class OLTView(ObjectView):
             },
         )
 
+class ONTEditView(ObjectEditView, View):
+    queryset = ONT.objects.all()
+    model_form = forms.ONTForm
+
 class GPONSplitterListView(ObjectListView, View):
     queryset = GPONSplitter.objects.all()
     table = tables.GPONSplitterTable
+
+class GPONSplitterEditView(ObjectEditView, View):
+    queryset = GPONSplitter.objects.all()
+    model_form = forms.GPONSplitterForm
+

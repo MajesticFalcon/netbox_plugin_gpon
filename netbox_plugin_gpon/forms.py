@@ -11,3 +11,13 @@ class OLTForm(BootstrapMixin, forms.ModelForm):
     class Meta:
         model = OLT
         exclude = ('',)
+
+
+class ONTForm(BootstrapMixin, forms.ModelForm):
+    class Meta:
+        model = ONT
+        exclude = ('',)
+class GPONSplitterForm(BootstrapMixin, forms.ModelForm):
+    class Meta:
+        model = GPONSplitter
+        exclude = ('',)

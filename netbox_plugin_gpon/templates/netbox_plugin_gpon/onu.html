@@ -8,14 +8,13 @@
 
 {% block header %}
     <div class="row noprint">
-        <div class="col-sm-6 col-md-7">
+        <div class="col-sm-8 col-md-9">
             <ol class="breadcrumb">
                 <li><a href="{% url 'plugins:netbox_plugin_gpon:olt_list' %}">OLTs</a></li>
 
                 <li>{{ object.name }}</li>
             </ol>
         </div>
-
         <div class="col-sm-4 col-md-3">
             <form action="{% url 'plugins:netbox_plugin_gpon:olt_list' %}" method="get">
                 <div class="input-group">
@@ -29,30 +28,10 @@
             </form>
         </div>
     </div>
+
 {% endblock %}
 
-
-
 {% block content %}
-<div class="row">
-    <div class="col-md-5 col-md-offset-7">
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mdi mdi-plus-thick" aria-hidden="true"></span> Add Components <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="{% url 'plugins:netbox_plugin_gpon:ont_add'  %}">Add ONT</a></li>
-                    <li><a href="{% url 'plugins:netbox_plugin_gpon:gponsplitter_add'  %}">Add Splitter</a></li>
-                </ul>
-
-                <a href="{% url 'plugins:netbox_plugin_gpon:olt_edit' pk=object.id %}" type="button" class="btn btn-warning">
-                    <span class="mdi mdi-pencil">Edit</span>
-                </a>
-            </div>
-    </div>
-</div>
-
-<br>
 
 <div class="row">
 

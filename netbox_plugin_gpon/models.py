@@ -7,7 +7,9 @@ from django.contrib.auth.models import User
 from ipam.fields import IPAddressField
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
 
+   
 class ISPDevice(ChangeLoggedModel):
     name = models.CharField(max_length=255)
     comments = models.TextField(null=True, blank=True)
@@ -27,9 +29,20 @@ class OLT(ISPActiveDevice):
     pass
 
 class GPONSplitter(ISPDevice):
-    uplink_type = models.CharField(max_length=255)
+
+    UPLINK_TYPE_CHOICES = (
+        ("CASCADED", "CASCADED"),
+        ("DIRECT", "DIRECT")
+    )
+
+    olts = OLT.objects.all()
+    #splitters = self.objects.all()
+    object_id_choices = ((1,2),)
+
+
+    uplink_type = models.CharField(max_length=255, choices=UPLINK_TYPE_CHOICES)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    object_id = models.PositiveIntegerField(choices=object_id_choices)
     uplink_port = GenericForeignKey('content_type', 'object_id')
 
     def get_absolute_url(self):
