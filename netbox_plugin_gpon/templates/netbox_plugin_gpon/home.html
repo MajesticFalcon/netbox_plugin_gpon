@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load buttons %}
+{% load helpers %}
+{% load plugins %}
+{% load static %}
+{% load tz %}
+{% load render_table from django_tables2 %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-sm-4 col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>OLTs</strong>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item">
+                        <span class="badge pull-right"></span>
+                        {% render_table olt_table %}
+                    <p class="list-group-item-text text-muted"></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>ONTs</strong>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item">
+                        <span class="badge pull-right"></span>
+                         {% render_table ont_table %}
+                    <p class="list-group-item-text text-muted"></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>GPON Splitters</strong>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item">
+                        <span class="badge pull-right"></span>
+                         {% render_table gponsplitters_table %}
+                    <p class="list-group-item-text text-muted"></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

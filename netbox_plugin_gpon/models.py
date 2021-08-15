@@ -16,10 +16,9 @@ class ISPDevice(ChangeLoggedModel):
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT)
     device_type = models.ForeignKey(DeviceType, on_delete=models.PROTECT)
     site = models.ForeignKey(Site, on_delete=models.PROTECT)
-    uuid = models.CharField(max_length=255, blank=True, null=True)
 
 class ISPActiveDevice(ISPDevice):
-    ip_address = IPAddressField(blank=True, null=True, default="")
+    ip_address = IPAddressField(blank=True, null=True, default="", verbose_name="IP Address")
     type = models.CharField(max_length=255, null=True, blank=True)
 
 
@@ -35,18 +34,15 @@ class GPONSplitter(ISPDevice):
         ("DIRECT", "DIRECT")
     )
 
-    olts = OLT.objects.all()
-    #splitters = self.objects.all()
-    object_id_choices = ((1,2),)
+    limit = models.Q(model = 'olt') | models.Q(model = 'gponsplitter')
 
-
-    uplink_type = models.CharField(max_length=255, choices=UPLINK_TYPE_CHOICES)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField(choices=object_id_choices)
+    uplink_type = models.CharField(max_length=255, choices=UPLINK_TYPE_CHOICES, verbose_name="Uplink connection type")
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, verbose_name="Uplink object type", limit_choices_to=limit)
+    object_id = models.PositiveIntegerField(verbose_name="Uplink id")
     uplink_port = GenericForeignKey('content_type', 'object_id')
 
     def get_absolute_url(self):
-        return reverse("plugins:netbox_plugin_gpon:olt", args=[self.pk])
+        return reverse("plugins:netbox_plugin_gpon:gponsplitter_edit", args=[self.pk])
 
     def __str__(self):
         return self.name
@@ -61,4 +57,4 @@ class ONT(ISPActiveDevice):
     uplink = models.ForeignKey(GPONSplitter, on_delete=models.PROTECT)
 
     def get_absolute_url(self):
-        return reverse("plugins:netbox_plugin_gpon:olt", args=[self.pk])
+        return reverse("plugins:netbox_plugin_gpon:ont_edit", args=[self.pk])

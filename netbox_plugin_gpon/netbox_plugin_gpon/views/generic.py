@@ -37,6 +37,7 @@ class ObjectListView(View):
     filterset = None
     filterset_form = None
     table = None
+    alt_title = None
     template_name = "netbox_plugin_gpon/generic/object_list.html"
     action_buttons = ("add", "import", "export")
 
@@ -56,10 +57,13 @@ class ObjectListView(View):
             "content_type": content_type,
             "action_buttons": self.action_buttons,
             "table": table,
-            "filter_form": self.filterset_form(request.GET, label_suffix="")
-            if self.filterset_form
-            else None,
         }
+
+        if self.filterset_form:
+            context['filter_form'] = self.filterset_form(request.GET, label_suffix="")
+
+        if self.alt_title:
+            context['alt_title'] = self.alt_title
 
         return render(request, self.template_name, context)
 

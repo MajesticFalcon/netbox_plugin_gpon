@@ -6,3 +6,8 @@ Example below
 
 
 ![Gif not loaded](https://github.com/MajesticFalcon/netbox_plugin_gpon/blob/master/img/OLT%20Example%20Page.png)
+
+![Gif not loaded](https://github.com/MajesticFalcon/netbox_plugin_gpon/blob/master/img/Home%20Page.png)
+
+![Gif not loaded](https://github.com/MajesticFalcon/netbox_plugin_gpon/blob/master/img/ONT%20Page.png)
+

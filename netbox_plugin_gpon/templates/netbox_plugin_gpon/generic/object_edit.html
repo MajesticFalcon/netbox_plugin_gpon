@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <h3>
-                    {% block title %}{% if obj.pk %}Editing {{ obj_type }} {{ obj }}{% else %}Add a new {{ obj_type }}{% endif %}{% endblock %}
+                    {% block title %}{% if obj.pk %}Editing {{ obj_type }} {{ obj.name }}{% else %}Add a new {{ obj_type }}{% endif %}{% endblock %}
                 </h3>
                 {% block tabs %}{% endblock %}
                 {% if form.non_field_errors %}

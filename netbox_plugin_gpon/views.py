@@ -10,16 +10,43 @@ from . import forms
 
 from .models import *
 from . import tables
+from . import filters
+
+class HomeView(View):
+    template_name = "netbox_plugin_gpon/home.html"
+    def get(self, request):
+        olts = OLT.objects.all()
+        olt_table = tables.OLTTable(olts)
+        RequestConfig(request, paginate={"per_page": 20}).configure(olt_table)
+
+        onts = ONT.objects.all()
+        ont_table = tables.ONTTable(onts)
+        RequestConfig(request, paginate={"per_page": 20}).configure(ont_table)
+
+        gponsplitters = GPONSplitter.objects.all()
+        gponsplitters_table = tables.GPONSplitterTable(gponsplitters)
+        RequestConfig(request, paginate={"per_page": 20}).configure(gponsplitters_table)
+
+        return render(request, self.template_name,{
+            'olt_table': olt_table,
+            'ont_table': ont_table,
+            'gponsplitters_table': gponsplitters_table,
+        })
 
 class OLTListView(ObjectListView, View):
+    alt_title="OLTs"
     queryset = OLT.objects.all()
     table = tables.OLTTable
+    filterset = filters.OLTFilterSet
+    filterset_form = forms.OLTFilterForm
 
 class OLTEditView(ObjectEditView, View):
+    alt_title = "OLT"
     queryset = OLT.objects.all()
     model_form = forms.OLTForm
 
 class OLTView(ObjectView):
+    alt_title = "OLT"
     queryset = OLT.objects.all()
 
     def get(self, request, *args, **kwargs):
@@ -49,15 +76,27 @@ class OLTView(ObjectView):
             },
         )
 
+class ONTListView(ObjectListView, View):
+    alt_title = "ONTs"
+    queryset = ONT.objects.all()
+    table = tables.ONTTable
+    filterset = filters.ONTFilterSet
+    filterset_form = forms.ONTFilterForm
+
 class ONTEditView(ObjectEditView, View):
+    alt_title = "ONT"
     queryset = ONT.objects.all()
     model_form = forms.ONTForm
 
 class GPONSplitterListView(ObjectListView, View):
+    alt_title = "GPON Splitters"
     queryset = GPONSplitter.objects.all()
     table = tables.GPONSplitterTable
+    filterset = filters.GPONSplitterFilterSet
+    filterset_form = forms.GPONSplitterFilterForm
 
 class GPONSplitterEditView(ObjectEditView, View):
+    alt_title = "GPON Splitter"
     queryset = GPONSplitter.objects.all()
     model_form = forms.GPONSplitterForm
 
